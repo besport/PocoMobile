@@ -1,0 +1,3 @@
+[submodule "Source"]
+	path = Source
+	url = git://github.com/pocoproject/poco.git
