@@ -1,7 +1,0 @@
-//
-// Prefix header for all source files of the 'PocoFoundation' target in the 'PocoFoundation' project
-//
-
-#ifdef __OBJC__
-    #import <Foundation/Foundation.h>
-#endif

@@ -1,0 +1,280 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		E700825516D7A42300D0D9EB /* PocoFoundation */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = E700825816D7A42300D0D9EB /* Build configuration list for PBXAggregateTarget "PocoFoundation" */;
+			buildPhases = (
+				E700825916D7A46800D0D9EB /* Build universal library */,
+			);
+			dependencies = (
+			);
+			name = PocoFoundation;
+			productName = "PocoFoundation Library";
+		};
+		E7221A3F16D7D78B007F5E06 /* PocoNet */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = E7221A4216D7D78B007F5E06 /* Build configuration list for PBXAggregateTarget "PocoNet" */;
+			buildPhases = (
+				E7221A4016D7D78B007F5E06 /* Build universal library */,
+			);
+			dependencies = (
+			);
+			name = PocoNet;
+			productName = "PocoFoundation Library";
+		};
+		E7221A4516D7D846007F5E06 /* PocoJSON */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = E7221A4816D7D846007F5E06 /* Build configuration list for PBXAggregateTarget "PocoJSON" */;
+			buildPhases = (
+				E7221A4616D7D846007F5E06 /* Build universal library */,
+			);
+			dependencies = (
+			);
+			name = PocoJSON;
+			productName = "PocoFoundation Library";
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXFileReference section */
+		E7221A3B16D7AF61007F5E06 /* Libraries */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Libraries; sourceTree = "<group>"; };
+		E7221DC416D7D945007F5E06 /* Includes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Includes; sourceTree = "<group>"; };
+		E7221DC816D7D95D007F5E06 /* Source */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Source; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		E7DC731A16D7A2D80039F69A = {
+			isa = PBXGroup;
+			children = (
+				E7221DC816D7D95D007F5E06 /* Source */,
+				E7221DC416D7D945007F5E06 /* Includes */,
+				E7221A3B16D7AF61007F5E06 /* Libraries */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXProject section */
+		E7DC731B16D7A2D80039F69A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Poco Project";
+			};
+			buildConfigurationList = E7DC731E16D7A2D80039F69A /* Build configuration list for PBXProject "Poco" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = E7DC731A16D7A2D80039F69A;
+			productRefGroup = E7DC731A16D7A2D80039F69A;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E700825516D7A42300D0D9EB /* PocoFoundation */,
+				E7221A3F16D7D78B007F5E06 /* PocoNet */,
+				E7221A4516D7D846007F5E06 /* PocoJSON */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		E700825916D7A46800D0D9EB /* Build universal library */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Build universal library";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "# Find library names\nLIBRARY_PATH=\"${SRCROOT}/Libraries\"\nLIBRARY_FILES=\"`find -L ${LIBRARY_PATH} -name lib${PRODUCT_NAME}.a`\"\nINCLUDE_PATH=\"${SRCROOT}/Includes/${PRODUCT_NAME}\"\n\n# Output library names\necho \"Building universal library with ${LIBRARY_PATH}:\"\necho \"${LIBRARY_FILES}\"\n\n# Build directories\nUNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\"\nUNIVERSAL_LIBRARY_PATH=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}\"\nFRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}.framework\"\n\n# Output framework path\necho \"Creating Framework at ${FRAMEWORK}\"\n\n# Create framework directory structure.\nrm -rf \"${FRAMEWORK}\" &&\nmkdir -p \"${UNIVERSAL_LIBRARY_DIR}\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Headers/Poco\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Resources\" &&\n\n# Generate universal binary for the device and simulator\necho \"Generating universal library\"\nlipo ${LIBRARY_FILES} -create -output \"${UNIVERSAL_LIBRARY_PATH}\" &&\n\n# Move files to appropriate locations in framework paths.\necho \"Moving files\"\ncp \"${UNIVERSAL_LIBRARY_PATH}\" \"${FRAMEWORK}/Versions/A\" &&\ncp -Rf \"${INCLUDE_PATH}\"/* \"${FRAMEWORK}/Versions/A/Headers/Poco/\" &&\nln -s \"A\" \"${FRAMEWORK}/Versions/Current\" &&\nln -s \"Versions/Current/Headers\" \"${FRAMEWORK}/Headers\" &&\nln -s \"Versions/Current/Resources\" \"${FRAMEWORK}/Resources\" &&\nln -s \"Versions/Current/${PRODUCT_NAME}\" \"${FRAMEWORK}/${PRODUCT_NAME}\"\n";
+		};
+		E7221A4016D7D78B007F5E06 /* Build universal library */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Build universal library";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "# Find library names\nLIBRARY_PATH=\"${SRCROOT}/Libraries\"\nLIBRARY_FILES=\"`find -L ${LIBRARY_PATH} -name lib${PRODUCT_NAME}.a`\"\nINCLUDE_PATH=\"${SRCROOT}/Includes/${PRODUCT_NAME}\"\n\n# Output library names\necho \"Building universal library with ${LIBRARY_PATH}:\"\necho \"${LIBRARY_FILES}\"\n\n# Build directories\nUNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\"\nUNIVERSAL_LIBRARY_PATH=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}\"\nFRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}.framework\"\n\n# Output framework path\necho \"Creating Framework at ${FRAMEWORK}\"\n\n# Create framework directory structure.\nrm -rf \"${FRAMEWORK}\" &&\nmkdir -p \"${UNIVERSAL_LIBRARY_DIR}\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Headers/Poco\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Resources\" &&\n\n# Generate universal binary for the device and simulator\necho \"Generating universal library\"\nlipo ${LIBRARY_FILES} -create -output \"${UNIVERSAL_LIBRARY_PATH}\" &&\n\n# Move files to appropriate locations in framework paths.\necho \"Moving files\"\ncp \"${UNIVERSAL_LIBRARY_PATH}\" \"${FRAMEWORK}/Versions/A\" &&\ncp -Rf \"${INCLUDE_PATH}\"/* \"${FRAMEWORK}/Versions/A/Headers/Poco/\" &&\nln -s \"A\" \"${FRAMEWORK}/Versions/Current\" &&\nln -s \"Versions/Current/Headers\" \"${FRAMEWORK}/Headers\" &&\nln -s \"Versions/Current/Resources\" \"${FRAMEWORK}/Resources\" &&\nln -s \"Versions/Current/${PRODUCT_NAME}\" \"${FRAMEWORK}/${PRODUCT_NAME}\"\n";
+		};
+		E7221A4616D7D846007F5E06 /* Build universal library */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Build universal library";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "# Find library names\nLIBRARY_PATH=\"${SRCROOT}/Libraries\"\nLIBRARY_FILES=\"`find -L ${LIBRARY_PATH} -name lib${PRODUCT_NAME}.a`\"\nINCLUDE_PATH=\"${SRCROOT}/Includes/${PRODUCT_NAME}\"\n\n# Output library names\necho \"Building universal library with ${LIBRARY_PATH}:\"\necho \"${LIBRARY_FILES}\"\n\n# Build directories\nUNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\"\nUNIVERSAL_LIBRARY_PATH=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}\"\nFRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}.framework\"\n\n# Output framework path\necho \"Creating Framework at ${FRAMEWORK}\"\n\n# Create framework directory structure.\nrm -rf \"${FRAMEWORK}\" &&\nmkdir -p \"${UNIVERSAL_LIBRARY_DIR}\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Headers/Poco\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Resources\" &&\n\n# Generate universal binary for the device and simulator\necho \"Generating universal library\"\nlipo ${LIBRARY_FILES} -create -output \"${UNIVERSAL_LIBRARY_PATH}\" &&\n\n# Move files to appropriate locations in framework paths.\necho \"Moving files\"\ncp \"${UNIVERSAL_LIBRARY_PATH}\" \"${FRAMEWORK}/Versions/A\" &&\ncp -Rf \"${INCLUDE_PATH}\"/* \"${FRAMEWORK}/Versions/A/Headers/Poco/\" &&\nln -s \"A\" \"${FRAMEWORK}/Versions/Current\" &&\nln -s \"Versions/Current/Headers\" \"${FRAMEWORK}/Headers\" &&\nln -s \"Versions/Current/Resources\" \"${FRAMEWORK}/Resources\" &&\nln -s \"Versions/Current/${PRODUCT_NAME}\" \"${FRAMEWORK}/${PRODUCT_NAME}\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		E700825616D7A42300D0D9EB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		E700825716D7A42300D0D9EB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		E7221A4316D7D78B007F5E06 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = PocoNet;
+			};
+			name = Debug;
+		};
+		E7221A4416D7D78B007F5E06 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = PocoNet;
+			};
+			name = Release;
+		};
+		E7221A4916D7D846007F5E06 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = PocoJSON;
+			};
+			name = Debug;
+		};
+		E7221A4A16D7D846007F5E06 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = PocoJSON;
+			};
+			name = Release;
+		};
+		E7DC732F16D7A2D80039F69A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					i686,
+					armv7,
+					armv6,
+				);
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		E7DC733016D7A2D80039F69A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					i686,
+					armv7,
+					armv6,
+				);
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E700825816D7A42300D0D9EB /* Build configuration list for PBXAggregateTarget "PocoFoundation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E700825616D7A42300D0D9EB /* Debug */,
+				E700825716D7A42300D0D9EB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E7221A4216D7D78B007F5E06 /* Build configuration list for PBXAggregateTarget "PocoNet" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E7221A4316D7D78B007F5E06 /* Debug */,
+				E7221A4416D7D78B007F5E06 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E7221A4816D7D846007F5E06 /* Build configuration list for PBXAggregateTarget "PocoJSON" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E7221A4916D7D846007F5E06 /* Debug */,
+				E7221A4A16D7D846007F5E06 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E7DC731E16D7A2D80039F69A /* Build configuration list for PBXProject "Poco" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E7DC732F16D7A2D80039F69A /* Debug */,
+				E7DC733016D7A2D80039F69A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E7DC731B16D7A2D80039F69A /* Project object */;
+}
