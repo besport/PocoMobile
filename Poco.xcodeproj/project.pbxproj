@@ -40,18 +40,31 @@
 			name = PocoJSON;
 			productName = "PocoFoundation Library";
 		};
+		E7221DCD16D7DD8F007F5E06 /* PocoXML */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = E7221DCF16D7DD8F007F5E06 /* Build configuration list for PBXAggregateTarget "PocoXML" */;
+			buildPhases = (
+				E7221DCE16D7DD8F007F5E06 /* Build universal library */,
+			);
+			dependencies = (
+			);
+			name = PocoXML;
+			productName = "PocoFoundation Library";
+		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXFileReference section */
 		E7221A3B16D7AF61007F5E06 /* Libraries */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Libraries; sourceTree = "<group>"; };
 		E7221DC416D7D945007F5E06 /* Includes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Includes; sourceTree = "<group>"; };
 		E7221DC816D7D95D007F5E06 /* Source */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Source; sourceTree = "<group>"; };
+		E7221DCC16D7DD63007F5E06 /* Frameworks */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Frameworks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
 		E7DC731A16D7A2D80039F69A = {
 			isa = PBXGroup;
 			children = (
+				E7221DCC16D7DD63007F5E06 /* Frameworks */,
 				E7221DC816D7D95D007F5E06 /* Source */,
 				E7221DC416D7D945007F5E06 /* Includes */,
 				E7221A3B16D7AF61007F5E06 /* Libraries */,
@@ -82,6 +95,7 @@
 				E700825516D7A42300D0D9EB /* PocoFoundation */,
 				E7221A3F16D7D78B007F5E06 /* PocoNet */,
 				E7221A4516D7D846007F5E06 /* PocoJSON */,
+				E7221DCD16D7DD8F007F5E06 /* PocoXML */,
 			);
 		};
 /* End PBXProject section */
@@ -99,7 +113,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "# Find library names\nLIBRARY_PATH=\"${SRCROOT}/Libraries\"\nLIBRARY_FILES=\"`find -L ${LIBRARY_PATH} -name lib${PRODUCT_NAME}.a`\"\nINCLUDE_PATH=\"${SRCROOT}/Includes/${PRODUCT_NAME}\"\n\n# Output library names\necho \"Building universal library with ${LIBRARY_PATH}:\"\necho \"${LIBRARY_FILES}\"\n\n# Build directories\nUNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\"\nUNIVERSAL_LIBRARY_PATH=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}\"\nFRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}.framework\"\n\n# Output framework path\necho \"Creating Framework at ${FRAMEWORK}\"\n\n# Create framework directory structure.\nrm -rf \"${FRAMEWORK}\" &&\nmkdir -p \"${UNIVERSAL_LIBRARY_DIR}\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Headers/Poco\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Resources\" &&\n\n# Generate universal binary for the device and simulator\necho \"Generating universal library\"\nlipo ${LIBRARY_FILES} -create -output \"${UNIVERSAL_LIBRARY_PATH}\" &&\n\n# Move files to appropriate locations in framework paths.\necho \"Moving files\"\ncp \"${UNIVERSAL_LIBRARY_PATH}\" \"${FRAMEWORK}/Versions/A\" &&\ncp -Rf \"${INCLUDE_PATH}\"/* \"${FRAMEWORK}/Versions/A/Headers/Poco/\" &&\nln -s \"A\" \"${FRAMEWORK}/Versions/Current\" &&\nln -s \"Versions/Current/Headers\" \"${FRAMEWORK}/Headers\" &&\nln -s \"Versions/Current/Resources\" \"${FRAMEWORK}/Resources\" &&\nln -s \"Versions/Current/${PRODUCT_NAME}\" \"${FRAMEWORK}/${PRODUCT_NAME}\"\n";
+			shellScript = "# Find library names\nLIBRARY_PATH=\"${SRCROOT}/Libraries\"\nLIBRARY_FILES=\"`find -L ${LIBRARY_PATH} -name lib${PRODUCT_NAME}.a`\"\nINCLUDE_PATH=\"${SRCROOT}/Includes/${PRODUCT_NAME}\"\n\n# Output library names\necho \"Building universal library with ${LIBRARY_PATH}:\"\necho \"${LIBRARY_FILES}\"\n\n# Build directories\nUNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\"\nUNIVERSAL_LIBRARY_PATH=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}\"\nFRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}.framework\"\n\n# Output framework path\necho \"Creating Framework at ${FRAMEWORK}\"\n\n# Create framework directory structure.\nrm -rf \"${FRAMEWORK}\" &&\nrm -rf \"${SRCROOT}/Frameworks/${PRODUCT_NAME}.framework\" &&\nmkdir -p \"${UNIVERSAL_LIBRARY_DIR}\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Headers/Poco\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Resources\" &&\n\n# Generate universal binary for the device and simulator\necho \"Generating universal library\"\nlipo ${LIBRARY_FILES} -create -output \"${UNIVERSAL_LIBRARY_PATH}\" &&\n\n# Move files to appropriate locations in framework paths.\necho \"Moving files\"\ncp \"${UNIVERSAL_LIBRARY_PATH}\" \"${FRAMEWORK}/Versions/A\" &&\ncp -Rf \"${INCLUDE_PATH}/\"* \"${FRAMEWORK}/Versions/A/Headers/Poco/\" &&\nln -s \"A\" \"${FRAMEWORK}/Versions/Current\" &&\nln -s \"Versions/Current/Headers\" \"${FRAMEWORK}/Headers\" &&\nln -s \"Versions/Current/Resources\" \"${FRAMEWORK}/Resources\" &&\nln -s \"Versions/Current/${PRODUCT_NAME}\" \"${FRAMEWORK}/${PRODUCT_NAME}\"\n\n# Copy framework to the Frameworks/ directory\necho \"Copying framework to Frameworks/\"\ncp -Rf \"${FRAMEWORK}\" \"${SRCROOT}/Frameworks/\"";
 		};
 		E7221A4016D7D78B007F5E06 /* Build universal library */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -113,7 +127,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "# Find library names\nLIBRARY_PATH=\"${SRCROOT}/Libraries\"\nLIBRARY_FILES=\"`find -L ${LIBRARY_PATH} -name lib${PRODUCT_NAME}.a`\"\nINCLUDE_PATH=\"${SRCROOT}/Includes/${PRODUCT_NAME}\"\n\n# Output library names\necho \"Building universal library with ${LIBRARY_PATH}:\"\necho \"${LIBRARY_FILES}\"\n\n# Build directories\nUNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\"\nUNIVERSAL_LIBRARY_PATH=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}\"\nFRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}.framework\"\n\n# Output framework path\necho \"Creating Framework at ${FRAMEWORK}\"\n\n# Create framework directory structure.\nrm -rf \"${FRAMEWORK}\" &&\nmkdir -p \"${UNIVERSAL_LIBRARY_DIR}\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Headers/Poco\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Resources\" &&\n\n# Generate universal binary for the device and simulator\necho \"Generating universal library\"\nlipo ${LIBRARY_FILES} -create -output \"${UNIVERSAL_LIBRARY_PATH}\" &&\n\n# Move files to appropriate locations in framework paths.\necho \"Moving files\"\ncp \"${UNIVERSAL_LIBRARY_PATH}\" \"${FRAMEWORK}/Versions/A\" &&\ncp -Rf \"${INCLUDE_PATH}\"/* \"${FRAMEWORK}/Versions/A/Headers/Poco/\" &&\nln -s \"A\" \"${FRAMEWORK}/Versions/Current\" &&\nln -s \"Versions/Current/Headers\" \"${FRAMEWORK}/Headers\" &&\nln -s \"Versions/Current/Resources\" \"${FRAMEWORK}/Resources\" &&\nln -s \"Versions/Current/${PRODUCT_NAME}\" \"${FRAMEWORK}/${PRODUCT_NAME}\"\n";
+			shellScript = "# Find library names\nLIBRARY_PATH=\"${SRCROOT}/Libraries\"\nLIBRARY_FILES=\"`find -L ${LIBRARY_PATH} -name lib${PRODUCT_NAME}.a`\"\nINCLUDE_PATH=\"${SRCROOT}/Includes/${PRODUCT_NAME}\"\n\n# Output library names\necho \"Building universal library with ${LIBRARY_PATH}:\"\necho \"${LIBRARY_FILES}\"\n\n# Build directories\nUNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\"\nUNIVERSAL_LIBRARY_PATH=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}\"\nFRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}.framework\"\n\n# Output framework path\necho \"Creating Framework at ${FRAMEWORK}\"\n\n# Create framework directory structure.\nrm -rf \"${FRAMEWORK}\" &&\nrm -rf \"${SRCROOT}/Frameworks/${PRODUCT_NAME}.framework\" &&\nmkdir -p \"${UNIVERSAL_LIBRARY_DIR}\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Headers/Poco\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Resources\" &&\n\n# Generate universal binary for the device and simulator\necho \"Generating universal library\"\nlipo ${LIBRARY_FILES} -create -output \"${UNIVERSAL_LIBRARY_PATH}\" &&\n\n# Move files to appropriate locations in framework paths.\necho \"Moving files\"\ncp \"${UNIVERSAL_LIBRARY_PATH}\" \"${FRAMEWORK}/Versions/A\" &&\ncp -Rf \"${INCLUDE_PATH}/\"* \"${FRAMEWORK}/Versions/A/Headers/Poco/\" &&\nln -s \"A\" \"${FRAMEWORK}/Versions/Current\" &&\nln -s \"Versions/Current/Headers\" \"${FRAMEWORK}/Headers\" &&\nln -s \"Versions/Current/Resources\" \"${FRAMEWORK}/Resources\" &&\nln -s \"Versions/Current/${PRODUCT_NAME}\" \"${FRAMEWORK}/${PRODUCT_NAME}\"\n\n# Copy framework to the Frameworks/ directory\necho \"Copying framework to Frameworks/\"\ncp -Rf \"${FRAMEWORK}\" \"${SRCROOT}/Frameworks/\"";
 		};
 		E7221A4616D7D846007F5E06 /* Build universal library */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -127,7 +141,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "# Find library names\nLIBRARY_PATH=\"${SRCROOT}/Libraries\"\nLIBRARY_FILES=\"`find -L ${LIBRARY_PATH} -name lib${PRODUCT_NAME}.a`\"\nINCLUDE_PATH=\"${SRCROOT}/Includes/${PRODUCT_NAME}\"\n\n# Output library names\necho \"Building universal library with ${LIBRARY_PATH}:\"\necho \"${LIBRARY_FILES}\"\n\n# Build directories\nUNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\"\nUNIVERSAL_LIBRARY_PATH=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}\"\nFRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}.framework\"\n\n# Output framework path\necho \"Creating Framework at ${FRAMEWORK}\"\n\n# Create framework directory structure.\nrm -rf \"${FRAMEWORK}\" &&\nmkdir -p \"${UNIVERSAL_LIBRARY_DIR}\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Headers/Poco\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Resources\" &&\n\n# Generate universal binary for the device and simulator\necho \"Generating universal library\"\nlipo ${LIBRARY_FILES} -create -output \"${UNIVERSAL_LIBRARY_PATH}\" &&\n\n# Move files to appropriate locations in framework paths.\necho \"Moving files\"\ncp \"${UNIVERSAL_LIBRARY_PATH}\" \"${FRAMEWORK}/Versions/A\" &&\ncp -Rf \"${INCLUDE_PATH}\"/* \"${FRAMEWORK}/Versions/A/Headers/Poco/\" &&\nln -s \"A\" \"${FRAMEWORK}/Versions/Current\" &&\nln -s \"Versions/Current/Headers\" \"${FRAMEWORK}/Headers\" &&\nln -s \"Versions/Current/Resources\" \"${FRAMEWORK}/Resources\" &&\nln -s \"Versions/Current/${PRODUCT_NAME}\" \"${FRAMEWORK}/${PRODUCT_NAME}\"\n";
+			shellScript = "# Find library names\nLIBRARY_PATH=\"${SRCROOT}/Libraries\"\nLIBRARY_FILES=\"`find -L ${LIBRARY_PATH} -name lib${PRODUCT_NAME}.a`\"\nINCLUDE_PATH=\"${SRCROOT}/Includes/${PRODUCT_NAME}\"\n\n# Output library names\necho \"Building universal library with ${LIBRARY_PATH}:\"\necho \"${LIBRARY_FILES}\"\n\n# Build directories\nUNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\"\nUNIVERSAL_LIBRARY_PATH=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}\"\nFRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}.framework\"\n\n# Output framework path\necho \"Creating Framework at ${FRAMEWORK}\"\n\n# Create framework directory structure.\nrm -rf \"${FRAMEWORK}\" &&\nrm -rf \"${SRCROOT}/Frameworks/${PRODUCT_NAME}.framework\" &&\nmkdir -p \"${UNIVERSAL_LIBRARY_DIR}\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Headers/Poco\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Resources\" &&\n\n# Generate universal binary for the device and simulator\necho \"Generating universal library\"\nlipo ${LIBRARY_FILES} -create -output \"${UNIVERSAL_LIBRARY_PATH}\" &&\n\n# Move files to appropriate locations in framework paths.\necho \"Moving files\"\ncp \"${UNIVERSAL_LIBRARY_PATH}\" \"${FRAMEWORK}/Versions/A\" &&\ncp -Rf \"${INCLUDE_PATH}/\"* \"${FRAMEWORK}/Versions/A/Headers/Poco/\" &&\nln -s \"A\" \"${FRAMEWORK}/Versions/Current\" &&\nln -s \"Versions/Current/Headers\" \"${FRAMEWORK}/Headers\" &&\nln -s \"Versions/Current/Resources\" \"${FRAMEWORK}/Resources\" &&\nln -s \"Versions/Current/${PRODUCT_NAME}\" \"${FRAMEWORK}/${PRODUCT_NAME}\"\n\n# Copy framework to the Frameworks/ directory\necho \"Copying framework to Frameworks/\"\ncp -Rf \"${FRAMEWORK}\" \"${SRCROOT}/Frameworks/\"";
+		};
+		E7221DCE16D7DD8F007F5E06 /* Build universal library */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Build universal library";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "# Find library names\nLIBRARY_PATH=\"${SRCROOT}/Libraries\"\nLIBRARY_FILES=\"`find -L ${LIBRARY_PATH} -name lib${PRODUCT_NAME}.a`\"\nINCLUDE_PATH=\"${SRCROOT}/Includes/${PRODUCT_NAME}\"\n\n# Output library names\necho \"Building universal library with ${LIBRARY_PATH}:\"\necho \"${LIBRARY_FILES}\"\n\n# Build directories\nUNIVERSAL_LIBRARY_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphoneuniversal\"\nUNIVERSAL_LIBRARY_PATH=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}\"\nFRAMEWORK=\"${UNIVERSAL_LIBRARY_DIR}/${PRODUCT_NAME}.framework\"\n\n# Output framework path\necho \"Creating Framework at ${FRAMEWORK}\"\n\n# Create framework directory structure.\nrm -rf \"${FRAMEWORK}\" &&\nrm -rf \"${SRCROOT}/Frameworks/${PRODUCT_NAME}.framework\" &&\nmkdir -p \"${UNIVERSAL_LIBRARY_DIR}\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Headers/Poco\" &&\nmkdir -p \"${FRAMEWORK}/Versions/A/Resources\" &&\n\n# Generate universal binary for the device and simulator\necho \"Generating universal library\"\nlipo ${LIBRARY_FILES} -create -output \"${UNIVERSAL_LIBRARY_PATH}\" &&\n\n# Move files to appropriate locations in framework paths.\necho \"Moving files\"\ncp \"${UNIVERSAL_LIBRARY_PATH}\" \"${FRAMEWORK}/Versions/A\" &&\ncp -Rf \"${INCLUDE_PATH}/\"* \"${FRAMEWORK}/Versions/A/Headers/Poco/\" &&\nln -s \"A\" \"${FRAMEWORK}/Versions/Current\" &&\nln -s \"Versions/Current/Headers\" \"${FRAMEWORK}/Headers\" &&\nln -s \"Versions/Current/Resources\" \"${FRAMEWORK}/Resources\" &&\nln -s \"Versions/Current/${PRODUCT_NAME}\" \"${FRAMEWORK}/${PRODUCT_NAME}\"\n\n# Copy framework to the Frameworks/ directory\necho \"Copying framework to Frameworks/\"\ncp -Rf \"${FRAMEWORK}\" \"${SRCROOT}/Frameworks/\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -171,6 +199,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = PocoJSON;
+			};
+			name = Release;
+		};
+		E7221DD016D7DD8F007F5E06 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = PocoXML;
+			};
+			name = Debug;
+		};
+		E7221DD116D7DD8F007F5E06 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = PocoXML;
 			};
 			name = Release;
 		};
@@ -261,6 +303,15 @@
 			buildConfigurations = (
 				E7221A4916D7D846007F5E06 /* Debug */,
 				E7221A4A16D7D846007F5E06 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E7221DCF16D7DD8F007F5E06 /* Build configuration list for PBXAggregateTarget "PocoXML" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E7221DD016D7DD8F007F5E06 /* Debug */,
+				E7221DD116D7DD8F007F5E06 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
