@@ -1,3 +1,3 @@
 # Building Poco for iOS
 
-Open the Xcode project and click _Build_. The generated frameworks are in `Frameworks/`.
+Run the `Build-iOS.sh` script, and optionally the `Build-iOS-Framework.sh` script if you want to have a Framework.
