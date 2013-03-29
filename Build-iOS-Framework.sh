@@ -28,7 +28,7 @@ NAME="Poco"
 INCLUDE_PATH="Includes"
 LIBRARY_PATH="Libraries"
 LIBRARY_NAMES="PocoFoundation PocoNet PocoJSON"
-ARCHITECTURES="armv6 armv7 i686"
+ARCHITECTURES="armv6 armv7 armv7s i686"
 FRAMEWORK="Frameworks/${NAME}.framework"
 
 # Output framework path
